@@ -1,5 +1,6 @@
 import numpy as np
 from scipy.stats import norm
+from black_scholes import blackScholesCall, blackScholesPut
 
 np.random.seed(42)# Makes the random number generator start at 42 each time
 
