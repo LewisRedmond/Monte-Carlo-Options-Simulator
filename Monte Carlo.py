@@ -77,3 +77,5 @@ print("\n====== Asian Options ======")
 print("Asian Call:", asianCall)
 print("Barrier Call (Up-and-Out):", barrierCall )
 
+from plots import plotPaths
+plotPaths(time, S)
