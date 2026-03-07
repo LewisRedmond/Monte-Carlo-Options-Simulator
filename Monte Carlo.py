@@ -24,7 +24,7 @@ def pathSimulator(S0, r, sigma, T, nSteps, nSim, dt):
     nSim *= 2
     S = np.zeros((nSteps+1, nSim))
     S[0] = S0
-    for t in range(1, nSteps+1):
+    for t in range(1, nSteps):
         S[t] = S[t-1]*np.exp((r-0.5*sigma**2)*dt+sigma*np.sqrt(dt)*Z[t])
     return S
 
