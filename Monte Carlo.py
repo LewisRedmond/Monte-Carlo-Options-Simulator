@@ -18,14 +18,13 @@ dt = T/nSteps
 time = np.linspace(0, T, nSteps+1)
 # Monte Carlo Simulation
 def pathSimulator(S0, r, sigma, T, nSteps, nSim, dt):
-    # The function simulates stock price paths using antithetic variates for variance reduction
     Z = np.random.standard_normal((nSteps, nSim))
     Z = np.concatenate((Z, -Z), axis=1)   # variance reduction
     nSim *= 2
     S = np.zeros((nSteps+1, nSim))
     S[0] = S0
-    for t in range(1, nSteps):
-        S[t] = S[t-1]*np.exp((r-0.5*sigma**2)*dt+sigma*np.sqrt(dt)*Z[t])
+    for t in range(1, nSteps+1):
+        S[t] = S[t-1]*np.exp((r-0.5*sigma**2)*dt+sigma*np.sqrt(dt)*Z[t-1])
     return S
 
 S = pathSimulator(S0, r, sigma, T, nSteps, nSim, dt)
@@ -40,8 +39,8 @@ callPriceMC = np.mean(discountedCall)
 putPriceMC  = np.mean(discountedPut)
 
 # Standard Errors
-callSe = np.std(discountedCall)/np.sqrt(nSim)
-putSe  = np.std(discountedPut)/np.sqrt(nSim)
+callSe = np.std(discountedCall)/np.sqrt(len(discountedCall))
+putSe  = np.std(discountedPut)/np.sqrt(len(discountedPut))
 
 # Confidence Intervals
 callCi = (float(callPriceMC-1.96*callSe), float(callPriceMC+1.96*callSe))
